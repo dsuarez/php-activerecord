@@ -1681,6 +1681,8 @@ class Model
 
 				throw new RecordNotFound("Couldn't find all $class with IDs ($values) (found $results, but was looking for $expected)");
 			}
+		} else {
+			$expected = 0;
 		}
 		return $expected == 1 ? $list[0] : $list;
 	}

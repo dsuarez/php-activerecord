@@ -1670,19 +1670,18 @@ class Model
 		if(!is_countable($values)) $values = [$values];
 		
 		if ($results != ($expected = count($values)))
+		{
+			$class = get_called_class();
+			if (is_array($values))
+				$values = join(',',$values);
+
+			if ($expected == 1)
 			{
-				$class = get_called_class();
-				if (is_array($values))
-					$values = join(',',$values);
-
-				if ($expected == 1)
-				{
-					throw new RecordNotFound("Couldn't find $class with ID=$values");
-				}
-
-				throw new RecordNotFound("Couldn't find all $class with IDs ($values) (found $results, but was looking for $expected)");
+				throw new RecordNotFound("Couldn't find $class with ID=$values");
 			}
-		} 
+
+			throw new RecordNotFound("Couldn't find all $class with IDs ($values) (found $results, but was looking for $expected)");
+		}
 		return $expected == 1 ? $list[0] : $list;
 	}
 
